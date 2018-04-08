@@ -18,7 +18,9 @@
                 <th>Email</th>
                 <th>Rôle</th>
                 <th>Inscription</th>
-                <th data-orderable="false">Action</th>                                
+                @if( Auth::user()->hasAnyRole(array('admin', 'moderator')) )
+                    <th data-orderable="false">Action</th>     
+                @endif                           
             </tr>
         </thead>
         <tbody>
