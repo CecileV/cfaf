@@ -7,14 +7,14 @@
             <div class="col">
                 <div class="form-group">
                     <label class="control-label">Titre *</label>
-                    <input type="text" class="form-control" name="title" placeholder="Mon article" value="">
+                    <input type="text" class="form-control" name="title" placeholder="Mon article" value="{{old('title')}}">
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group">
                     <label class="control-label">Slug</label>
-                    <input type="text" class="form-control" name="slug" placeholder="Mon article" value="">
+                    <input type="text" class="form-control" name="slug" placeholder="Mon article" value="{{old('slug')}}">
                 </div>
             </div>
         </div>
@@ -46,41 +46,37 @@
             <div class="col">
                 <div class="form-group">
                     <label for="content">Article *</label>
-                    <textarea class="form-control" id="content" rows="15" name="content"></textarea>
+                    <textarea class="form-control" id="content" rows="15" name="content">{{old('content')}}</textarea>
                 </div>
             </div>
         </div>
 
-        @if(Auth::user()->hasAnyRole(array('admin', 'moderator')))
-            <div class="text-right">
+        <div class="text-right">
+            @can('create', App\Article::class)
                 <button type="submit" class="btn btn-success">
-                    <i class="fas fa-check-circle"></i> Valider
+                    <i class="fas fa-check-circle"></i> Enregistrer
                 </button>
-                <button type="button" class="btn btn-warning drafted">
-                    <i class="far fa-check-circle"></i> Brouillon
-                </button>  
-                <button type="button" class="btn btn-danger aborted">
-                    <i class="fas fa-trash-alt"></i> Annuler
-                </button>
-            </div>
-        @endif         
+            @endcan 
+            <button type="button" class="btn btn-danger aborted">
+                <i class="fas fa-trash-alt"></i> Annuler
+            </button>
+        </div>
+
     </form>
 @endsection
 
 @section('jscontent')
-    @if(Auth::user()->hasAnyRole(array('admin', 'moderator')))
-        <script type="text/javascript">
-            $('.aborted').click(function(){
-                if(confirm('Êtes-vous sûr de vouloir annuler la création de l\'article ?')){
-                    document.location.href = "{{ route('admin.articles') }}";            
-                }
-            });
+    <script type="text/javascript">
+        $('.aborted').click(function(){
+            if(confirm('Êtes-vous sûr de vouloir annuler la création de l\'article ?')){
+                document.location.href = "{{ route('admin.articles') }}";            
+            }
+        });
 
-            $('input[type=file]').change( function(){
-                if (this.files && this.files[0]) {
-                    $(this).next().html(this.files[0].name);
-                }
-            });
-        </script>
-    @endif
+        $('input[type=file]').change( function(){
+            if (this.files && this.files[0]) {
+                $(this).next().html(this.files[0].name);
+            }
+        });
+    </script>
 @endsection

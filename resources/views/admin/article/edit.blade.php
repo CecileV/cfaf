@@ -14,11 +14,12 @@
             <div class="col">
                 <div class="form-group">
                     <label class="control-label">Slug</label>
-                    @if( Auth::user()->hasAnyRole(array('admin', 'moderator')) )
+                    @can('update_slug', $article )
                         <input type="text" class="form-control" name="slug" placeholder="Mon article" value="{{ $article->slug }}">
-                    @else
+                    @endcan
+                    @cannot('update_slug', $article)
                         <p>{{ $article->slug }}</p>
-                    @endif
+                    @endcan
                 </div>        
             </div>
         </div>
@@ -62,12 +63,16 @@
         </div>
 
         <div class="text-right">
-            <button type="submit" class="btn btn-success">
-                <i class="fas fa-check-circle"></i> Valider
-            </button>
-            <button type="button" class="btn btn-danger deleted">
-                <i class="fas fa-trash-alt"></i> Supprimer
-            </button>
+            @can('update', $article)
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check-circle"></i> Enregistrer
+                </button>
+            @endcan 
+            @can('delete', $article)
+                <button type="button" class="btn btn-danger deleted">
+                    <i class="fas fa-trash-alt"></i> Supprimer
+                </button>
+            @endcan 
         </div>
     </form>
     <hr/>
@@ -80,25 +85,27 @@
 @endsection
 
 @section('jscontent')
-    <script type="text/javascript">
-        $('.deleted').click(function(){
-            if(confirm('Êtes-vous sûr de vouloir supprimer cette article ?')){
-                $.ajax({
-                    url : "{{ route('admin.ajax.article.delete') }}",
-                    type : 'POST',
-                    data : {
-                        "_token": '{{ csrf_token() }}',
-                        "id": '{{ $article->id }}'
-                    },
-                    success : function(json){
-                        if(json){
-                            document.location.href = "{{ route('admin.articles') }}";
-                        } else {
-                            alert('Il y a eu une erreur.')
+    @can('delete', $article)
+        <script type="text/javascript">
+            $('.deleted').click(function(){
+                if(confirm('Êtes-vous sûr de vouloir supprimer cette article ?')){
+                    $.ajax({
+                        url : "{{ route('admin.ajax.article.delete') }}",
+                        type : 'POST',
+                        data : {
+                            "_token": '{{ csrf_token() }}',
+                            "id": '{{ $article->id }}'
+                        },
+                        success : function(json){
+                            if(json){
+                                document.location.href = "{{ route('admin.articles') }}";
+                            } else {
+                                alert('Il y a eu une erreur.')
+                            }
                         }
-                    }
-                });
-            }
-        });
-    </script>
+                    });
+                }
+            });
+        </script>
+    @endcan
 @endsection

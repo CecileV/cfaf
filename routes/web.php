@@ -44,6 +44,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 	Route::post('/user/update/{id}', 'UserController@update')->name('user.update');
 	Route::post('/user/store', 'UserController@store')->name('user.store');
 
+	// ROLES
+	Route::get('/roles', 'RoleController@list')->name('roles');
+	Route::get('/role/voir/{id}', 'RoleController@edit')->name('role.edit');
+	Route::get('/role/ajouter', 'RoleController@add')->name('role.add');
+	Route::post('/role/update/{id}', 'RoleController@update')->name('role.update');
+	Route::post('/role/store', 'RoleController@store')->name('role.store');
+
 	// ARTICLES
 	Route::get('/articles', 'ArticleController@list')->name('articles');
 	Route::get('/article/voir/{id}', 'ArticleController@edit')->name('article.edit');
@@ -70,6 +77,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 		// USERS
 		Route::post('user/delete', 'UserController@delete')->name('user.delete');
 		Route::post('user/restore', 'UserController@restore')->name('user.restore');
+
+		// ROLES
+		Route::post('role/delete', 'RoleController@delete')->name('role.delete');
+		Route::post('role/restore', 'RoleController@restore')->name('role.restore');
 
 		// ARTICLES
 		Route::get('article/latest', 'ArticleController@latest')->name('article.latest');

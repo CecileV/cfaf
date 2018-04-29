@@ -2,9 +2,11 @@
 @section('title', 'Articles')
 
 @section('right')
-    <a href="{{ route('admin.article.add') }}" class="btn btn-primary">
-        <i class="fas fa-plus-circle"></i> Ajouter un Article
-    </a>     
+    @can('create', App\Article::class)
+        <a href="{{ route('admin.article.add') }}" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i> Ajouter un Article
+        </a>     
+    @endcan
 @endsection
 
 @section('content')
@@ -35,22 +37,30 @@
                         <td> {{ $article->updated_at->format('d/m/Y à H:i:s') }} </td>
                         <td>
                             @if($article->draft)
-                                <a href="javascript:;" class="drafted" data-toggle="tooltip" data-placement="left" title="Brouillon" data-id="{{ $article->id }}">
-                                    <i class="fas fa-circle text-warning"></i>
-                                <a>
+                                @can('unpublish', $article)
+                                    <a href="javascript:;" class="drafted" data-toggle="tooltip" data-placement="left" title="Brouillon" data-id="{{ $article->id }}">
+                                        <i class="fas fa-circle text-warning"></i>
+                                    <a>
+                                @endcan
                             @else
-                                <a href="javascript:;" class="undrafted" data-toggle="tooltip" data-placement="left" title="Publié" data-id="{{ $article->id }}">
-                                    <i class="fas fa-circle text-success"></i>
-                                </a>
+                                @can('publish', $article)
+                                    <a href="javascript:;" class="undrafted" data-toggle="tooltip" data-placement="left" title="Publié" data-id="{{ $article->id }}">
+                                        <i class="fas fa-circle text-success"></i>
+                                    </a>
+                                @endcan
                             @endif
                         </td>
                         <td>    
-                            <a href="{{ route('admin.article.edit', $article->id) }}">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="javascript:;" class="text-danger deleted" data-id="{{ $article->id }}">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                            @can('update', $article)
+                                <a href="{{ route('admin.article.edit', $article->id) }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            @endcan
+                            @can('delete', $article)
+                                <a href="javascript:;" class="text-danger deleted" data-id="{{ $article->id }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

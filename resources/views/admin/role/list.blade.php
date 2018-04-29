@@ -1,10 +1,10 @@
 @extends('layouts.admin')
-@section('title', 'Liste des Catégories')
+@section('title', 'Rôles')
 @section('right')
-    @can('create', App\Category::class)
-        <a href="{{ route('admin.category.add') }}" class="btn btn-primary">
-            <i class="fas fa-plus-circle"></i> Ajouter une Categorie
-        </a>     
+    @can('create', App\Role::class)
+        <a href="{{ route('admin.role.add') }}" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i> Ajouter un Rôle
+        </a>
     @endcan
 @endsection
 @section('content')
@@ -12,36 +12,34 @@
         <table class="table table-bordered table-striped DataTable">
             <thead class="thead-dark">
                 <tr>
-                    <th> Nom </th>
                     <th> Slug </th>
-                    <th> Auteur </th>
-                    <th> Description </th>
+                    <th> Nom </th>
+                    <th> Auteur </th>     
                     <th> Date de création </th>
                     <th> Dernière modification </th>
                     <th data-orderable="false"> Action </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $category)
+                @foreach ($roles as $role)
                     <tr>
-                        <td> {{ $category->name }} </td>
-                        <td> {{ $category->slug }} </td>
+                        <td> {{ $role->slug }} </td>
+                        <td> {{ $role->name }} </td>
                         <td>
-                            @if($category->creator)
-                                {{ $category->creator->name }} 
+                            @if($role->creator)
+                                {{ $role->creator->name }} 
                             @endif
                         </td>
-                        <td> {{ $category->description }} </td>
-                        <td> {{ $category->created_at->format('d/m/Y à H:i:s') }} </td>
-                        <td> {{ $category->updated_at->format('d/m/Y à H:i:s') }}</td>
+                        <td> {{ $role->created_at->format('d/m/Y à H:i:s') }}</td>
+                        <td> {{ $role->updated_at->format('d/m/Y à H:i:s') }}</td>
                         <td>    
-                            @can('update', $category)
-                                <a href="{{ route('admin.category.edit', $category->id) }}">
+                            @can('update', $role)
+                                <a href="{{ route('admin.role.edit', $role->id) }}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             @endcan
-                            @can('delete', $category)
-                                <a href="javascript:;" class="text-danger deleted" data-id="{{ $category->id }}">
+                            @can('delete', $role)
+                                <a href="javascript:;" class="text-danger deleted" data-id="{{ $role->id }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             @endcan
@@ -54,21 +52,20 @@
 @endsection
 
 @section('jscontent')
-    @can('delete', $category)
-        <script type="text/javascript">
+    <script type="text/javascript">
             $('.deleted').click(function(){
-                let categoryId = $(this).data('id');
-                if(confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')){
+                let id = $(this).data('id');
+                if(confirm('Êtes-vous sûr de vouloir supprimer ce rôle ?')){
                     $.ajax({
-                        url : "{{ route('admin.ajax.category.delete') }}",
+                        url : "{{ route('admin.ajax.role.delete') }}",
                         type : 'POST',
                         data : {
                             "_token": '{{ csrf_token() }}',
-                            "id": categoryId
+                            "id": id
                         },
                         success : function(json){
                             if(json.status){
-                                document.location.href = "{{ route('admin.categories') }}";
+                                document.location.href = "{{ route('admin.roles') }}";
                             } else {
                                 alert('Il y a eu une erreur.')
                             }
@@ -76,6 +73,5 @@
                     });                
                 }
             });
-        </script>
-    @endcan
+    </script>
 @endsection

@@ -15,14 +15,7 @@ class StoreUser extends FormRequest
      * @return bool
      */
     public function authorize() {
-        if( Auth::user()->hasAnyRole(array('admin', 'moderator'))){
-            return true;
-        } elseif (Route::current()->parameters['id'] && Auth::user()->id == Route::current()->parameters['id'] ) {
-            return true;
-        } 
-        else {
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -43,10 +36,7 @@ class StoreUser extends FormRequest
 
             // Modification du mot de passe
             if(!empty($this->password)){
-                $rules['password'] = ['required','string','min:6','confirmed'];   
-                if( !Auth::user()->hasAnyRole(array('admin', 'moderator')) ){
-                    $rules['old_password'] = ['sometimes','required'];
-                }               
+                $rules['password'] = ['required','string','min:6','confirmed'];                 
             }
         }
         // Si c'est une enregistrement

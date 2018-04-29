@@ -33,12 +33,16 @@
                         <td> {{ $tag->created_at->format('d/m/Y à H:i:s') }}</td>
                         <td> {{ $tag->updated_at->format('d/m/Y à H:i:s') }}</td>
                         <td>    
-                            <a href="{{ route('admin.tag.edit', $tag->id) }}">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="javascript:;" class="text-danger deleted" data-id="{{ $tag->id }}">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                            @can('update', $tag)
+                                <a href="{{ route('admin.tag.edit', $tag->id) }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            @endcan
+                            @can('delete', $tag)
+                                <a href="javascript:;" class="text-danger deleted" data-id="{{ $tag->id }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

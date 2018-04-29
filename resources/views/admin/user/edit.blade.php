@@ -15,33 +15,31 @@
                 </div>            
             </div>
 
-            <div class="col">
-                @if( !Auth::user()->hasAnyRole(array('admin', 'moderator')) )
-                    <div class="form-group{{ $errors->has('old_password') ? ' has-error' : '' }}">
-                        <label for="old_password" class="control-label">Mot de Passe</label>
-                        <input id="old_password" type="password" class="form-control" name="old_password" required>
+            @can('update_password', $user)
+                <div class="col">
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <label for="password" class="control-label">Nouveau Mot de Passe</label>
+                        <input id="password" type="password" class="form-control" name="password">
                     </div>
-                @endif
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                    <label for="password" class="control-label">Nouveau Mot de Passe</label>
-                    <input id="password" type="password" class="form-control" name="password">
+                    <div class="form-group">
+                        <label for="password-confirm" class="control-label">Confirmation</label>
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password-confirm" class="control-label">Confirmation</label>
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-                </div>
-            </div>
+            @endcan
         </div>
          
         <div class="text-right">
-            <button type="submit" class="btn btn-success">
-                <i class="fas fa-check-circle"></i> Valider
-            </button>
-            @if( Auth::user()->hasAnyRole(array('admin', 'moderator')) )
+            @can('update', $user)
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check-circle"></i> Valider
+                </button>
+            @endcan
+            @can('delete', $user)
                 <button type="button" class="btn btn-danger deleted">
                     <i class="fas fa-trash-alt"></i> Supprimer
                 </button>
-            @endif
+            @endcan
         </div>            
         
 
@@ -59,7 +57,7 @@
 @endsection
 
 @section('jscontent')
-    @if(Auth::user()->hasAnyRole(array('admin', 'moderator')))
+    @can('delete', $user)
         <script type="text/javascript">
             $('.deleted').click(function(){
                 if(confirm('Êtes-vous sûr de vouloir supprimer ce membre ?')){
@@ -81,5 +79,5 @@
                 }
             });
         </script>
-    @endif
+    @endcan
 @endsection

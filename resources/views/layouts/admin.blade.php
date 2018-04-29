@@ -29,18 +29,31 @@
                         <li class="nav-item @if(Route::current()->getName() == 'admin.dashboard') active @endif">
                             <a class="nav-link" href="{{ route('admin.dashboard') }}">Tableau de Bord</a>
                         </li>
-                        <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.user') !== false) active @endif">
-                            <a class="nav-link" href="{{ route('admin.users') }}">Utilisateurs</a>
-                        </li>
-                        <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.article') !== false) active @endif">
-                            <a class="nav-link" href="{{ route('admin.articles') }}">Articles</a>
-                        </li>
-                        <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.categor') !== false) active @endif">
-                            <a class="nav-link" href="{{ route('admin.categories') }}">Catégories</a>
-                        </li>
-                        <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.mot') !== false) active @endif">
-                            <a class="nav-link" href="{{ route('admin.tags') }}">Mots Clés</a>
-                        </li>
+                        @can('list', App\User::class)
+                            <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.user') !== false) active @endif">
+                                <a class="nav-link" href="{{ route('admin.users') }}">Utilisateurs</a>
+                            </li>
+                        @endcan
+                        @can('list', App\Role::class)
+                            <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.role') !== false) active @endif">
+                                <a class="nav-link" href="{{ route('admin.roles') }}">Rôles</a>
+                            </li>
+                        @endcan
+                        @can('list', App\Article::class)
+                            <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.article') !== false) active @endif">
+                                <a class="nav-link" href="{{ route('admin.articles') }}">Articles</a>
+                            </li>
+                        @endcan
+                        @can('list', App\Category::class)
+                            <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.categor') !== false) active @endif">
+                                <a class="nav-link" href="{{ route('admin.categories') }}">Catégories</a>
+                            </li>
+                        @endcan
+                        @can('list', App\Tag::class)
+                            <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.mot') !== false) active @endif">
+                                <a class="nav-link" href="{{ route('admin.tags') }}">Mots Clés</a>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
 

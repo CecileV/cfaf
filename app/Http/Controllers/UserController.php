@@ -21,8 +21,12 @@ class UserController extends Controller
      * @return Response
      */
     public function list() {
-        $users = User::get();
-        return view('admin.user.list', ['users' => $users]);
+        if (Auth::user()->can('list', User::class)) {
+            $users = User::get();
+            return view('admin.user.list', ['users' => $users]);
+        } else {
+            return redirect(route('admin.dashboard'));
+        }
     }
 
     /**
@@ -32,28 +36,33 @@ class UserController extends Controller
      * @return Response
      */
     public function edit($id) {
-        if(Auth::user()->hasAnyRole(array('admin', 'moderator')) || Auth::user()->id == $id) {
-            return view('admin.user.edit', ['user' => User::findOrFail($id)]); 
+        $user = User::findOrFail($id);
+        if (Auth::user()->can('update', $user)) {
+            return view('admin.user.edit', ['user' => $user]); 
         } else {
             return redirect(route('admin.users'));
         }
     }
 
     public function add() {
-        return view('admin.user.add');
+        if (Auth::user()->can('create', User::class)) {
+            return view('admin.user.add');
+        } else {
+            return redirect(route('admin.users'));
+        }
     }
 
     public function store(StoreUser $request) {
+        if (Auth::user()->can('create', User::class)) {
+            $user = new User;
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
 
-        $user = new User;
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        $user->save();
-
-        $role_user  = Role::where('name', 'user')->first();
-        $user->roles()->attach($role_user);
-
+            $role_user  = Role::where('name', 'user')->first();
+            $user->roles()->attach($role_user);
+        }
         return redirect(route('admin.users'));
     }
 
@@ -65,27 +74,19 @@ class UserController extends Controller
      */
     public function update($id, StoreUser $request){
 
-        if( Auth::user()->hasAnyRole(array('admin', 'moderator')) || Auth::user()->id == $id ) {
+        $user = User::findOrFail($id);
 
-            $user = User::findOrFail($id);
+        if (Auth::user()->can('update', $user)) {
+
             $name = $request->input('name');
             $email = $request->input('email');
             $user->update(['name' => $name, 'email' => $email]);
 
             // Modification du mot de passe
-            $old_password = $request->input('old_password');
             $password = $request->input('password');
-            if(!empty($password)){
-                if( Auth::user()->hasAnyRole(array('admin', 'moderator')) ){
-                    $user->password = bcrypt($password);
-                    $user->save();
-                } elseif( Hash::check($old_password, $user->password) ){
-                    $user->password = bcrypt($password);
-                    $user->save();
-                } else {
-                    return redirect(route('admin.user.edit', $id))
-                        ->withErrors('Renseignez votre mot de passe actuel dans le champ mot de passe.');
-                }
+            if(!empty($password) && Auth::user()->can('update_password', $user) ){
+                $user->password = bcrypt($password);
+                $user->save();
             }
 
             return redirect(route('admin.user.edit', $id))->with('success', 'Votre profil a été mis à jour.');
@@ -93,50 +94,7 @@ class UserController extends Controller
             return redirect(route('admin.dashboard'));
         }
     }
-
-    /**
-     * Update the password for the given user.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function updatePassword($id, Request $request)
-    {
-        if( Auth::user()->hasAnyRole(array('admin', 'moderator')) || Auth::user()->id == $id ) {
-
-            if( !Auth::user()->hasAnyRole(array('admin', 'moderator')) ){
-                $request->validate([
-                    'old_password' => 'required',
-                    'password' => 'required|string|min:6|confirmed',
-                ]);                
-            } else {
-                $request->validate([
-                    'password' => 'required|string|min:6|confirmed',
-                ]);  
-            }
-
-
-            $user = User::findOrFail($id);
-            if( !Auth::user()->hasAnyRole(array('admin', 'moderator')) ){
-                $user->password = bcrypt($request->password);
-                $user->save();
-                return redirect(route('admin.user.edit', $id))
-                    ->with('success', 'Le mot de passe a été mis à jour : "'.$request->password.'".');
-            } elseif( Hash::check($request->old_password, $user->password) ){
-                $user->password = bcrypt($request->password);
-                $user->save();
-                return redirect(route('admin.user.edit', $id))
-                    ->with('success', 'Votre mot de passe a été mis à jour.');
-            } else {
-                return redirect(route('admin.user.edit', $id))
-                    ->withErrors('Renseignez votre mot de passe actuel dans le champ mot de passe.'); 
-            }
-            
-        } else {
-            return redirect(route('admin.dashboard'));
-        }
-    }
-
+    
     /**
      * Delete the profile for the given user.
      *
@@ -145,6 +103,7 @@ class UserController extends Controller
      */
     public function delete($id = NULL, Request $request)
     {
+        $return = false;
         if(empty($id)){
             if(!empty($request->has('id'))){
                 $id = $request->input('id');
@@ -152,9 +111,9 @@ class UserController extends Controller
         }
         if(!empty($id)){
             $user = User::findOrFail($id);
-            $return = $user->delete();            
-        } else {
-            $return = false;
+            if( Auth::user()->can('delete', $user) ){
+                $return = $user->delete();   
+            }
         }
 
         return json_encode($return);

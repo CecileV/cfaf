@@ -26,17 +26,15 @@
                 </div>
             </div>
         </div>
-        <div class="text-right">
-            <button type="submit" class="btn btn-success">
-                <i class="fas fa-check-circle"></i> Valider
-            </button>
-        </div>            
+        @can('create', App\User::class)
+            <div class="text-right">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check-circle"></i> Valider
+                </button>
+            </div>
+        @endcan
     </form>
 @endsection
 
 @section('jscontent')
-    @if(Auth::user()->hasAnyRole(array('admin', 'moderator')))
-        <script type="text/javascript">
-        </script>
-    @endif
 @endsection

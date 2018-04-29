@@ -2,7 +2,7 @@
 @section('title', 'Liste des Utilisateurs')
 
 @section('right')
-    @if(Auth::user()->hasAnyRole(array('admin', 'moderator')))
+    @can('create', App\User::class)
         <a href="{{ route('admin.user.add') }}" class="btn btn-primary">
             <i class="fas fa-plus-circle"></i> Ajouter un Utilisateur
         </a>
@@ -18,9 +18,7 @@
                 <th>Email</th>
                 <th>Rôle</th>
                 <th>Inscription</th>
-                @if( Auth::user()->hasAnyRole(array('admin', 'moderator')) )
-                    <th data-orderable="false">Action</th>     
-                @endif                           
+                <th data-orderable="false">Action</th>        
             </tr>
         </thead>
         <tbody>
@@ -30,16 +28,18 @@
                     <td> {{$user->email}} </td>
                     <td> {{$user->roles()->first()->description}} </td>
                     <td> {{$user->created_at->format('d/m/Y')}} </td>
-                    @if( Auth::user()->hasAnyRole(array('admin', 'moderator')) )
-                        <td>
+                    <td>
+                        @can('update', $user)
                             <a href="{{ route('admin.user.edit', $user->id) }}">
                                 <i class="fas fa-edit"></i>
                             </a>
+                        @endcan
+                        @can('delete', $user)
                             <a href="javascript:;" class="text-danger deleted" data-id="{{ $user->id }}">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
-                        </td>
-                    @endif
+                        @endcan
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -48,7 +48,7 @@
 @endsection
 
 @section('jscontent')
-    @if(Auth::user()->hasAnyRole(array('admin', 'moderator')))
+    @can('delete', $user)
         <script type="text/javascript">
             $('.deleted').click(function(){
                 iUserId = $(this).data('id');
@@ -71,5 +71,5 @@
                 }
             });
         </script>
-    @endif
+    @endcan
 @endsection

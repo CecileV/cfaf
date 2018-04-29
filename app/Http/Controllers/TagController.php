@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTag;
 use App\Tag;
+use Auth;
+
 class TagController extends Controller
 {
     /* -- ESPACE PUBLIC -- */
@@ -13,23 +16,48 @@ class TagController extends Controller
 
     /* -- ESPACE ADMINISTRATION -- */
     public function list() {
-        $tags = Tag::get();
-        return view('admin.tag.list', compact('tags'));
+        if (Auth::user()->can('list', Tag::class)) {
+            $tags = Tag::get();
+            return view('admin.tag.list', compact('tags'));
+        }
+        return redirect(route('admin.dashboard'));
     }
 
-    public function edit() {
-        return view('admin.tag.edit');
-    }
-
-    public function add() {
-        return view('admin.tag.add');
-    }
-
-    public function update() {
+    public function edit($id) {
+        $tag = Tag::findOrFail($id);   
+        if (Auth::user()->can('update', $tag)) {
+            return view('admin.tag.edit', compact('tag'));
+        }
         return redirect(route('admin.tags'));
     }
 
-    public function store() {
+    public function add()  {
+        if (Auth::user()->can('create', Tag::class)) {
+            return view('admin.tag.add');
+        }
+        return redirect(route('admin.tags'));
+    }
+
+    public function update($id, StoreTag $request) {
+        $tag = Tag::findOrFail($id);
+        if (Auth::user()->can('update', $tag)) {
+            $tag->name = $request->name;
+            $tag->slug = $request->slug;
+            $tag->description = $request->description;
+            $tag->save();
+            return redirect( route('admin.tag.edit', compact('id')) )->withSuccess('Mot Clé Modifié');
+        }
+        return redirect(route('admin.tags'));
+    }
+
+    public function store(StoreTag $request) {
+        if (Auth::user()->can('create', Tag::class)) {
+            $tag = new Tag;
+            $tag->name = $request->name;
+            $tag->slug = $request->slug;
+            $tag->description = $request->description;
+            $tag->save();
+        }
         return redirect(route('admin.tags'));
     }
 
@@ -37,8 +65,10 @@ class TagController extends Controller
     public function delete(Request $request) {
         $id = $request->input('id');
         $tag = Tag::findOrFail($id);
-        if( $tag->delete() ){
-            return response()->json(['status' => true]);
+        if (Auth::user()->can('delete', $tag)) {
+            if( $tag->delete() ){
+                return response()->json(['status' => true]);
+            }
         }
         return response()->json(['status' => false]);
     }
