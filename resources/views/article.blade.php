@@ -7,7 +7,9 @@
                 <header>
                     <h2>{{ $article->title }}</h2>
                 </header>
-                <img class="card-img-top" src="{{ url($article->picture) }}" alt="[ photo : {{ $article->slug }} ]">
+                @if($article->picture)
+                    <img class="card-img-top" src="{{ url($article->picture) }}" alt="[ photo : {{ $article->slug }} ]">
+                @endif
                 <article>
                     {!! $article->content !!}
                 </article>

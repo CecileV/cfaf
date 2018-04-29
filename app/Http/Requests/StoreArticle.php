@@ -26,7 +26,6 @@ class StoreArticle extends FormRequest
     {
         return [
             "title" => "required|min:5",
-            "slug" => "alpha_dash",
             "content" => "required",
             "picture" => "image",
             "category" => "required"

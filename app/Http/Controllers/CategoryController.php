@@ -42,7 +42,6 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         if (Auth::user()->can('update', $category)) {
             $category->name = $request->name;
-            $category->slug = $request->slug;
             $category->description = $request->description;
             $category->save();
             return redirect( route('admin.category.edit', compact('id')) )->withSuccess('Catégorie Modifiée');
@@ -54,7 +53,7 @@ class CategoryController extends Controller
         if (Auth::user()->can('create', Category::class)) {
             $category = new Category;
             $category->name = $request->name;
-            $category->slug = $request->slug;
+            $category->slug = str_slug( $request->name , '-' );
             $category->description = $request->description;
             $category->save();
         }

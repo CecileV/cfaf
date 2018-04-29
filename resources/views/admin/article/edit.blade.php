@@ -10,18 +10,6 @@
                     <input type="text" class="form-control" name="title" placeholder="Mon article" value="{{ $article->title }}">
                 </div>        
             </div>
-            
-            <div class="col">
-                <div class="form-group">
-                    <label class="control-label">Slug</label>
-                    @can('update_slug', $article )
-                        <input type="text" class="form-control" name="slug" placeholder="Mon article" value="{{ $article->slug }}">
-                    @endcan
-                    @cannot('update_slug', $article)
-                        <p>{{ $article->slug }}</p>
-                    @endcan
-                </div>        
-            </div>
         </div>
 
         <div class="row">

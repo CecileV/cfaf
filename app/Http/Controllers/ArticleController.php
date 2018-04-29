@@ -62,9 +62,6 @@ class ArticleController extends Controller
             $article->content = $request->content;
             $article->title = $request->title;
 
-            // Slug
-            $article->slug = str_replace( array(' ', '\'', '"'), array('_', '', ''), $request->slug ? $request->slug : $request->title );
-
             // Picture
             if( $request->hasFile('picture') ) {
                 $file = $request->file('picture');
@@ -93,9 +90,7 @@ class ArticleController extends Controller
             $article->draft = 1;
             $article->title = $request->title;
             $article->content = $request->content;
-
-            // Slug
-            $article->slug = strtolower( str_replace( array(' ', '_', '\'', '"'), array('-','-', '', ''), $request->slug ? $request->slug : $request->title ) );
+            $article->slug = str_slug( $request->title , '-' );
         
             // Picture [ rework name : _{id}_ actually missing ]
             if( $request->hasFile('picture') ) {

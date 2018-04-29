@@ -42,7 +42,6 @@ class TagController extends Controller
         $tag = Tag::findOrFail($id);
         if (Auth::user()->can('update', $tag)) {
             $tag->name = $request->name;
-            $tag->slug = $request->slug;
             $tag->description = $request->description;
             $tag->save();
             return redirect( route('admin.tag.edit', compact('id')) )->withSuccess('Mot Clé Modifié');
@@ -54,7 +53,7 @@ class TagController extends Controller
         if (Auth::user()->can('create', Tag::class)) {
             $tag = new Tag;
             $tag->name = $request->name;
-            $tag->slug = $request->slug;
+            $tag->slug = str_slug( $request->name , '-' );
             $tag->description = $request->description;
             $tag->save();
         }

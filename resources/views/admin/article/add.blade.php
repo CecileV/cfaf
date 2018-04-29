@@ -10,13 +10,6 @@
                     <input type="text" class="form-control" name="title" placeholder="Mon article" value="{{old('title')}}">
                 </div>
             </div>
-
-            <div class="col">
-                <div class="form-group">
-                    <label class="control-label">Slug</label>
-                    <input type="text" class="form-control" name="slug" placeholder="Mon article" value="{{old('slug')}}">
-                </div>
-            </div>
         </div>
 
         <div class="row">

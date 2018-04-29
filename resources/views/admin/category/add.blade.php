@@ -7,11 +7,7 @@
         <div class="form-group">
             <label class="control-label">Nom *</label>
             <input type="text" class="form-control" name="name" placeholder="Entrez le nom" value="{{ old('name') }}">
-        </div>
-        <div class="form-group">
-            <label class="control-label">Slug </label>
-            <input type="text" class="form-control" name="slug" placeholder="Entrez le slug" value="{{ old('slug') }}">
-        </div>            
+        </div>         
         <div class="form-group">
             <label class="control-label">Description </label>
             <textarea class="form-control" name="description" placeholder="Entrez la description" rows="5" >{{ old('description') }}</textarea>
