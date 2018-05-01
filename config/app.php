@@ -180,6 +180,9 @@ return [
         /* Laravel Debug Bag */
         Barryvdh\Debugbar\ServiceProvider::class,
 
+        /* CKEditor */ 
+        Unisharp\Ckeditor\ServiceProvider::class,
+
     ],
 
     /*

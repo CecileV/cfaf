@@ -39,7 +39,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="content">Article *</label>
-                    <textarea class="form-control" id="content" rows="15" name="content">{{old('content')}}</textarea>
+                    <textarea class="form-control ckeditor" id="content" rows="15" name="content">{{old('content')}}</textarea>
                 </div>
             </div>
         </div>
