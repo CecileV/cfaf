@@ -20,25 +20,26 @@ class CreatePetsTable extends Migration
     public function up()
     {
         Schema::create('pets', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('state_id');
-            $table->integer('specie_id');
-            $table->string('name');
-            $table->date('birth_day')->unique();
-            $table->string('identification')->nullable();
-            $table->string('sex');
-            $table->string('description');
-            $table->string('health');
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
-            $table->softDeletes();
-            $table->integer('deleted_by')->nullable();
-            $table->index('deleted_by');
-            $table->index('updated_by');
-            $table->index('created_by');
-            $table->dateTime('deleted_at');
-            $table->dateTime('updated_at');
-            $table->dateTime('created_at');
+            $table->increments  ('pet_id');
+            $table->integer     ('state_id');
+            $table->integer     ('specie_id');
+            $table->string      ('name');
+            $table->date        ('birth_day')->unique();
+            $table->string      ('identification')->nullable();
+            $table->string      ('sex');
+            $table->string      ('description');
+            $table->string      ('health');
+            $table->integer     ('updated_by')->nullable();
+            $table->index       ('updated_by');
+            $table->dateTime    ('updated_at');
+            $table->integer     ('created_by')->nullable();
+            $table->index       ('created_by');
+            $table->dateTime    ('created_at');
+            $table->integer     ('deleted_by')->nullable();
+            $table->index       ('deleted_by');
+            $table->dateTime    ('deleted_at');
+
+
         });
     }
 
