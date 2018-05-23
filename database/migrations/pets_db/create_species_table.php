@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePetsTable extends Migration
+class CreateSpeciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,16 +19,11 @@ class CreatePetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pets', function (Blueprint $table) {
+        Schema::create('species', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('state_id');
-            $table->integer('specie_id');
             $table->string('name');
-            $table->date('birth_day')->unique();
-            $table->string('identification')->nullable();
-            $table->string('sex');
-            $table->string('description');
-            $table->string('health');
+            $table->text('description');
+            $table->boolean('identification')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->softDeletes();
@@ -49,6 +44,6 @@ class CreatePetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pets');
+        Schema::dropIfExists('species');
     }
 }
