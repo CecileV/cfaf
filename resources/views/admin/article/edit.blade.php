@@ -43,7 +43,7 @@
             <div class="col">
                 <div class="form-group">
                     <label for="content">Article *</label>
-                    <textarea name="content" class="form-control ckeditor" id="content" rows="15">
+                    <textarea name="content" class="form-control ckeditor1" id="content" rows="15">
                         {{ $article->content }}
                     </textarea>
                 </div>
