@@ -39,7 +39,7 @@ class StoreUser extends FormRequest
                 $rules['password'] = ['required','string','min:6','confirmed'];                 
             }
         }
-        // Si c'est une enregistrement
+        // Si c'est un enregistrement
         else{
             $rules['email'] = [ 'required', 'email', 'max:255', 'unique:users' ] ;
             $rules['password'] = ['required','string','min:6','confirmed'];  
