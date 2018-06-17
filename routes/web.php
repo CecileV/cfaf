@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//URL::forceRootUrl('http://devbox-cfaf.ketsuka-hosting.fr/');
+URL::forceRootUrl(Config::get('app.url'));
 
 Auth::routes();
 
