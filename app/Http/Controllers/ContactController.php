@@ -13,6 +13,6 @@ class ContactController extends Controller
 
     public function postForm()
     {
-        $contact = $request->all();
+        //$contact = $request->all();
     }
 }
