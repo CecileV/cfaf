@@ -21,7 +21,6 @@ Route::get('/', 'GlobalController@index')->name('index');
 Route::get('/plan', 'GlobalController@map')->name('map');
 Route::get('/mentions', 'GlobalController@mentions')->name('mentions');
 Route::get('/contact', 'ContactController@getForm');
-//Route::post('/contact', 'ContactController@postForm');
 
 // ARTICLES
 Route::get('/articles', 'ArticleController@show')->name('articles');

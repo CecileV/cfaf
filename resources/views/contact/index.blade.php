@@ -3,7 +3,9 @@
 @section('content')
     <div>
         <h1>Formulaire de contact</h1>
-        {!! Form::open(['url' => 'contact']) !!}
+        {!! Form::open( array('url' => action('ContactController@postForm'), 'files'=>true,'method'=>'post') )  !!}
+
+        {{--{!! Form::open(['url' => 'contact']) !!}--}}
         <div class="form-group {!! $errors->has('name') ? 'has-error' : '' !!}">
             {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Votre nom']) !!}
             {!! $errors->first('name', '<small class="help-block">:message</small>') !!}
