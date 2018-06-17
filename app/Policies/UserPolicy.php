@@ -75,6 +75,19 @@ class UserPolicy
     }
 
     /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $model
+     * @return mixed
+     */
+    public function update_role(User $user, User $model)
+    {
+        return false;
+    }
+    
+
+    /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user

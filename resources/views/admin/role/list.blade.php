@@ -23,8 +23,8 @@
             <tbody>
                 @foreach ($roles as $role)
                     <tr>
-                        <td> {{ $role->slug }} </td>
                         <td> {{ $role->name }} </td>
+                        <td> {{ $role->description }} </td>
                         <td>
                             @if($role->creator)
                                 {{ $role->creator->name }} 

@@ -12,7 +12,23 @@
                 <div class="form-group">
                     <label class="control-label">Adresse E-Mail *</label>
                     <input type="email" class="form-control" name="email" placeholder="exemple@exemple.com" value="{{ $user->email }}">
-                </div>            
+                </div>   
+                @can('update_role', $user)
+                    <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
+                        <label for="role" class="control-label">Rôle</label>
+                        <select class="form-control" name="role">
+                            @foreach ($roles as $role)
+                                <option value="{{$role->id}}" @if($user->hasRole($role->name)) selected @endif >
+                                    {{$role->description}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endcan
+                @cannot('update_role', $user)
+                    <input type="hidden" name="role" value="{{$user->roles()->first()->id}}">
+                @endcannot
+
             </div>
 
             @can('update_password', $user)
