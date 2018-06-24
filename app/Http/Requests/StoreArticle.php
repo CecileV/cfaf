@@ -27,7 +27,7 @@ class StoreArticle extends FormRequest
         return [
             "title" => "required|min:5",
             "content" => "required",
-            "picture" => "image",
+            "picture" => "min:33",
             "category" => "required"
         ];
     }

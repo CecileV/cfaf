@@ -6,7 +6,7 @@
             <div class="col-3">
                 <article style="margin-bottom: 2%">
                     <div class="card">
-                      <img class="card-img-top" src="{{ url($article->picture) }}" alt="[ photo : {{ $article->slug }} ]">
+                      <img class="card-img-top" src="{{ url($article->getThumb($article->picture)) }}" alt="[ photo : {{ $article->slug }} ]">
                       <div class="card-body">
                         <h1 class="card-title">
                             <a href="{{ route('article', $article->slug) }}" title="{{ $article->title }}">

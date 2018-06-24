@@ -11,6 +11,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">    
     <!-- JS -->
     <script src="{{ asset('js/admin.js') }}"></script> 
+    <script src="/vendor/laravel-filemanager/js/lfm.js"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
 </head>

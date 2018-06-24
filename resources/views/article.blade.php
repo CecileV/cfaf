@@ -8,7 +8,7 @@
                     <h2>{{ $article->title }}</h2>
                 </header>
                 @if($article->picture)
-                    <img class="card-img-top" src="{{ url($article->picture) }}" alt="[ photo : {{ $article->slug }} ]">
+                    <img src="{{ url($article->getThumb($article->picture)) }}" alt="[ photo : {{ $article->slug }} ]">
                 @endif
                 <article>
                     {!! $article->content !!}

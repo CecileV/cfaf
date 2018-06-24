@@ -61,14 +61,7 @@ class ArticleController extends Controller
         if (Auth::user()->can('update', $article)) {
             $article->content = $request->content;
             $article->title = $request->title;
-
-            // Picture
-            if( $request->hasFile('picture') ) {
-                $file = $request->file('picture');
-                $name = 'article_' . $id . '_' . $file->getClientOriginalName();
-                $file->move($this->storage.'/'. date('Y') , $name);
-                $article->picture = $this->storage .'/'. date('Y') .'/'. $name;
-            }
+            $article->picture = $request->picture;
             $article->save();
 
             // Category
@@ -91,14 +84,7 @@ class ArticleController extends Controller
             $article->title = $request->title;
             $article->content = $request->content;
             $article->slug = str_slug( $request->title , '-' );
-        
-            // Picture [ rework name : _{id}_ actually missing ]
-            if( $request->hasFile('picture') ) {
-                $file = $request->file('picture');
-                $name = 'article_' . $file->getClientOriginalName();
-                $file->move($this->storage .'/'. date('Y'), $name);
-                $article->picture = $this->storage .'/'. date('Y') .'/'. $name;
-            }
+            $article->picture = $request->picture;
             $article->save();
 
             // Category 

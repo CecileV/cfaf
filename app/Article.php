@@ -44,6 +44,13 @@ class Article extends Model
         $this->attributes['accepted_at'] = Carbon::createFromFormat('d/m/Y', $value);
     }
 
+    public static function getThumb($path) {
+        $str_to_insert = '/thumbs';
+        $oldstr = $path;
+        $pos = strrpos($path,"/");
+        return substr_replace($oldstr, $str_to_insert, $pos, 0);
+    }
+
     /**
      * Relations
      *

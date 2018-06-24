@@ -49633,6 +49633,7 @@ var options = {
 
 $(document).ready(function () {
 	$('textarea.ckeditor1').ckeditor(options);
+	$('#lfm').filemanager('file');
 });
 
 /***/ })

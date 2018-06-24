@@ -15,13 +15,18 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="pictureSelect">Image</label>
-                    <label class="custom-file">
-                        <input type="file" id="pictureSelect" class="custom-file-input" name="picture">
-                        <span class="custom-file-control">Choisir une image...</span>
-                    </label>
-                     @if($article->picture)
-                        <img src="{{ url($article->picture) }}" class="img-thumbnail">
+                    <label for="picture">Image</label>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                                Parcourir
+                            </a>
+                        </span>
+                        <input id="thumbnail" class="form-control" type="text" name="picture">
+                    </div>
+                    <img id="holder" style="margin-top:15px;max-height:100px;">
+                    @if($article->picture)
+                        <img src="{{ url($article->getThumb($article->picture)) }}" class="img-thumbnail">
                     @endif
                 </div>
             </div>
