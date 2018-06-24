@@ -5,7 +5,7 @@
         {{ csrf_field() }}
         <div class="form-group">
             <label class="control-label">Nom *</label>
-            <input type="text" class="form-control" name="name" placeholder="Entrez le nom" value="{{ old('name') }}">
+            <input type="text" class="form-control" name="description" placeholder="Entrez le nom" value="{{ old('description') }}">
         </div>           
         @can('create', App\Role::class)
             <div class="text-right">

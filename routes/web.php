@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//URL::forceRootUrl(Config::get('app.url'));
+URL::forceRootUrl(Config::get('app.url'));
 
 Auth::routes();
 
@@ -37,6 +37,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
 	// DASHBOARD
 	Route::get('/tableau', 'AdminController@dashboard')->name('dashboard');
+	// FILE MANAGER
+	Route::get('/filemanager', 'AdminController@filemanager')->name('filemanager');
 
 	// USERS
 	Route::get('/utilisateurs', 'UserController@list')->name('users');

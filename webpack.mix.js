@@ -19,4 +19,5 @@ mix.js([
 	'resources/assets/js/fontawesome-all.js',
 	'resources/assets/js/admin.js'
 	], 'public/js/admin.js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .sass('resources/assets/sass/filemanager.scss', 'public/css');

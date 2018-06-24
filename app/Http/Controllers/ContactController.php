@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ContactRequest;
+use App\Contact;
 
 class ContactController extends Controller
 {
@@ -11,8 +13,9 @@ class ContactController extends Controller
         return view ('contact.index');
     }
 
-    public function postForm()
+    public function postForm(ContactRequest $request)
     {
+    	var_dump($request);
         //$contact = $request->all();
     }
 }

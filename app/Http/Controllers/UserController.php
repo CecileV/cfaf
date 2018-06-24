@@ -38,7 +38,8 @@ class UserController extends Controller
     public function edit($id) {
         $user = User::findOrFail($id);
         if (Auth::user()->can('update', $user)) {
-            return view('admin.user.edit', ['user' => $user]); 
+            $roles = Role::get();
+            return view('admin.user.edit', ['user' => $user, 'roles' => $roles]); 
         } else {
             return redirect(route('admin.users'));
         }
@@ -46,7 +47,8 @@ class UserController extends Controller
 
     public function add() {
         if (Auth::user()->can('create', User::class)) {
-            return view('admin.user.add');
+            $roles = Role::get();
+            return view('admin.user.add', ['roles' => $roles]);
         } else {
             return redirect(route('admin.users'));
         }
@@ -60,9 +62,14 @@ class UserController extends Controller
             $user->password = bcrypt($request->input('password'));
             $user->save();
 
-            $role_user  = Role::where('name', 'user')->first();
-            $user->roles()->attach($role_user);
-        }
+            if (Auth::user()->can('update_role', User::class)) {
+                $role_user  = Role::where('id', $request->input('role'))->first();
+                $user->roles()->attach($role_user);
+            } else {
+                $role_user  = Role::where('id', 'user')->first();
+                $user->roles()->attach($role_user);
+            }
+        } 
         return redirect(route('admin.users'));
     }
 
@@ -83,10 +90,18 @@ class UserController extends Controller
             $user->update(['name' => $name, 'email' => $email]);
 
             // Modification du mot de passe
-            $password = $request->input('password');
-            if(!empty($password) && Auth::user()->can('update_password', $user) ){
-                $user->password = bcrypt($password);
-                $user->save();
+            if (Auth::user()->can('update_password', $user)) {
+                $password = $request->input('password');
+                if(!empty($password) && Auth::user()->can('update_password', $user) ){
+                    $user->password = bcrypt($password);
+                    $user->save();
+                }
+            }
+
+            if (Auth::user()->can('update_role', $user)) {
+                $user->roles()->detach();
+                $role_user  = Role::where('id', $request->input('role'))->first();
+                $user->roles()->attach($role_user);
             }
 
             return redirect(route('admin.user.edit', $id))->with('success', 'Votre profil a été mis à jour.');

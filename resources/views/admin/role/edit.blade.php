@@ -7,14 +7,14 @@
             <div class="col">
                 <div class="form-group">
                     <label class="control-label">Nom *</label>
-                    <input type="text" class="form-control" name="name" placeholder="Nom" value="{{ $role->name }}">
+                    <input type="text" class="form-control" name="description" placeholder="Nom" value="{{ $role->description }}">
                 </div>        
             </div>
             
             <div class="col">   
                 <div class="form-group">
                     <label class="control-label">Slug</label>
-                    <input type="text" class="form-control" name="slug" value="{{ $role->slug }}" disabled>
+                    <input type="text" class="form-control" name="name" value="{{ $role->name }}" disabled>
                 </div>               
             </div>
         </div>

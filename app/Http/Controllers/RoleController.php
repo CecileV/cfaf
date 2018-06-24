@@ -31,7 +31,7 @@ class RoleController extends Controller
     public function update($id, StoreRole $request) {
         $role = Role::findOrFail($id);
         if (Auth::user()->can('update', $role)) {
-            $role->name = $request->name;
+            $role->description = $request->description;
             $role->save();
             return redirect( route('admin.role.edit', compact('id')) )->withSuccess('Rôle Modifié');
         }
@@ -40,8 +40,8 @@ class RoleController extends Controller
     public function store(StoreRole $request) {
         if (Auth::user()->can('create', Role::class)) {
             $role = new Role;
-            $role->name = $request->name;
-            $role->slug = str_replace( array(' ', '\'', '"'), array('_', '', ''), $request->slug ? $request->slug : $request->name );
+            $role->description = $request->description;
+            $role->name = str_slug($request->description);
             $role->save();
         }
         return redirect(route('admin.roles'));

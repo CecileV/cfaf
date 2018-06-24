@@ -28,6 +28,7 @@ class StoreUser extends FormRequest
                 'name' => 'required|max:255',
                 'email' =>  'required|email|max:255',
             ];
+        $rules['role'] = ['required','integer','exists:roles,id'];
 
         // Si c'est une modification
         if (!empty(Route::current()->parameters['id'])) {
