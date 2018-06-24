@@ -45,8 +45,13 @@
                             </li>
                         @endcan
                         @can('list', App\Category::class)
-                            <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.categor') !== false) active @endif">
+                            <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.categorie') !== false) active @endif">
                                 <a class="nav-link" href="{{ route('admin.categories') }}">Catégories</a>
+                            </li>
+                        @endcan
+                        @can('list', App\Specie::class)
+                            <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.specie') !== false) active @endif">
+                                <a class="nav-link" href="{{ route('admin.species') }}">Espèces</a>
                             </li>
                         @endcan
                         @can('list', App\Tag::class)

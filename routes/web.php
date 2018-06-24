@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//URL::forceRootUrl('http://devbox-cfaf.ketsuka-hosting.fr/');
+//URL::forceRootUrl(Config::get('app.url'));
 
 Auth::routes();
 
@@ -58,6 +58,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 	Route::get('/article/ajouter', 'ArticleController@add')->name('article.add');
 	Route::post('/article/update/{id}', 'ArticleController@update')->name('article.update');
 	Route::post('/article/store', 'ArticleController@store')->name('article.store');
+
+	//SPECIES
+	Route::get('/species', 'SpecieController@list')->name('species');
+	Route::get('/specie/voir/{id}', 'SpecieController@edit')->name('specie.edit');
+	Route::get('/specie/ajouter', 'SpecieController@add')->name('specie.add');
+	Route::post('/specie/update/{id}', 'SpecieController@update')->name('specie.update');
+	Route::post('/specie/store', 'SpecieController@store')->name('specie.store');
 
 	// CATEGORIES
 	Route::get('/categories', 'CategoryController@list')->name('categories');

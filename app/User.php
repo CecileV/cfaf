@@ -81,6 +81,12 @@ class User extends Authenticatable
         ->withTimestamps();
     }
 
+    public function species() {
+      return $this
+        ->belongsToMany('App\Specie')
+        ->withTimestamps();
+    }
+
     /**
      * Roles
      *

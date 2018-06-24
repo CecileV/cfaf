@@ -33,11 +33,11 @@ class Specie extends Model
      * Relations
      *
      */
-    /*public function tags() {
+    public function species() {
         return $this
-            ->belongsToMany('App\Tag')
+            ->belongsToMany('App\Specie')
             ->withTimestamps();
-    }*/
+    }
 
     public function creator() {
         return $this->belongsTo('App\User', 'created_by');
