@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 133);
+/******/ 	return __webpack_require__(__webpack_require__.s = 135);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -49608,19 +49608,31 @@ if(~classArray(node).indexOf(config.replacementClass)){return mutators.replace(m
    */if(prefix==='fas'){define('fa',icons);}}var Library=function(){function Library(){classCallCheck(this,Library);this.definitions={};}createClass(Library,[{key:'add',value:function add(){var _this=this;for(var _len=arguments.length,definitions=Array(_len),_key=0;_key<_len;_key++){definitions[_key]=arguments[_key];}var additions=definitions.reduce(this._pullDefinitions,{});Object.keys(additions).forEach(function(key){_this.definitions[key]=_extends({},_this.definitions[key]||{},additions[key]);define(key,additions[key]);});}},{key:'reset',value:function reset(){this.definitions={};}},{key:'_pullDefinitions',value:function _pullDefinitions(additions,definition){var normalized=definition.prefix&&definition.iconName&&definition.icon?{0:definition}:definition;Object.keys(normalized).map(function(key){var _normalized$key=normalized[key],prefix=_normalized$key.prefix,iconName=_normalized$key.iconName,icon=_normalized$key.icon;if(!additions[prefix])additions[prefix]={};additions[prefix][iconName]=icon;});return additions;}}]);return Library;}();function prepIcon(icon){var width=icon[0];var height=icon[1];var vectorData=icon.slice(4);return{found:true,width:width,height:height,icon:{tag:'path',attributes:{fill:'currentColor',d:vectorData[0]}}};}var _cssInserted=false;function ensureCss(){if(!config.autoAddCss){return;}if(!_cssInserted){insertCss(css());}_cssInserted=true;}function apiObject(val,abstractCreator){Object.defineProperty(val,'abstract',{get:abstractCreator});Object.defineProperty(val,'html',{get:function get(){return val.abstract.map(function(a){return toHtml(a);});}});Object.defineProperty(val,'node',{get:function get(){if(!DOCUMENT.createElement)return;var container=DOCUMENT.createElement('div');container.innerHTML=val.html;return container.children;}});return val;}function findIconDefinition(params){var _params$prefix=params.prefix,prefix=_params$prefix===undefined?'fa':_params$prefix,iconName=params.iconName;if(!iconName)return;return iconFromMapping(library.definitions,prefix,iconName)||iconFromMapping(namespace.styles,prefix,iconName);}function resolveIcons(next){return function(maybeIconDefinition){var params=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};var iconDefinition=(maybeIconDefinition||{}).icon?maybeIconDefinition:findIconDefinition(maybeIconDefinition||{});var mask=params.mask;if(mask){mask=(mask||{}).icon?mask:findIconDefinition(mask||{});}return next(iconDefinition,_extends({},params,{mask:mask}));};}var library=new Library();var api={noAuto:function noAuto(){auto(false);},dom:{i2svg:function i2svg(){var params=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};ensureCss();var _params$node=params.node,node=_params$node===undefined?DOCUMENT:_params$node,_params$callback=params.callback,callback=_params$callback===undefined?function(){}:_params$callback;if(config.searchPseudoElements){searchPseudoElements(node);}onTree(node,callback);},css:css,insertCss:function insertCss$$1(){insertCss(css());}},library:library,parse:{transform:function transform(transformString){return parseTransformString(transformString);}},findIconDefinition:findIconDefinition,icon:resolveIcons(function(iconDefinition){var params=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};var _params$transform=params.transform,transform=_params$transform===undefined?meaninglessTransform:_params$transform,_params$symbol=params.symbol,symbol=_params$symbol===undefined?false:_params$symbol,_params$mask=params.mask,mask=_params$mask===undefined?null:_params$mask,_params$title=params.title,title=_params$title===undefined?null:_params$title,_params$classes=params.classes,classes=_params$classes===undefined?[]:_params$classes,_params$attributes=params.attributes,attributes=_params$attributes===undefined?{}:_params$attributes,_params$styles=params.styles,styles=_params$styles===undefined?{}:_params$styles;if(!iconDefinition)return;var prefix=iconDefinition.prefix,iconName=iconDefinition.iconName,icon=iconDefinition.icon;return apiObject(_extends({type:'icon'},iconDefinition),function(){ensureCss();if(config.autoA11y){if(title){attributes['aria-labelledby']=config.replacementClass+'-title-'+nextUniqueId();}else{attributes['aria-hidden']='true';}}return makeInlineSvgAbstract({icons:{main:prepIcon(icon),mask:mask?prepIcon(mask.icon):{found:false,width:null,height:null,icon:{}}},prefix:prefix,iconName:iconName,transform:_extends({},meaninglessTransform,transform),symbol:symbol,title:title,extra:{attributes:attributes,styles:styles,classes:classes}});});}),text:function text(content){var params=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};var _params$transform2=params.transform,transform=_params$transform2===undefined?meaninglessTransform:_params$transform2,_params$title2=params.title,title=_params$title2===undefined?null:_params$title2,_params$classes2=params.classes,classes=_params$classes2===undefined?[]:_params$classes2,_params$attributes2=params.attributes,attributes=_params$attributes2===undefined?{}:_params$attributes2,_params$styles2=params.styles,styles=_params$styles2===undefined?{}:_params$styles2;return apiObject({type:'text',content:content},function(){ensureCss();return makeLayersTextAbstract({content:content,transform:_extends({},meaninglessTransform,transform),title:title,extra:{attributes:attributes,styles:styles,classes:[config.familyPrefix+'-layers-text'].concat(toConsumableArray(classes))}});});},layer:function layer(assembler){return apiObject({type:'layer'},function(){ensureCss();var children=[];assembler(function(args){Array.isArray(args)?children=args.map(function(a){children=children.concat(a.abstract);}):children=children.concat(args.abstract);});return[{tag:'span',attributes:{class:config.familyPrefix+'-layers'},children:children}];});}};var autoReplace=function autoReplace(){if(config.autoReplaceSvg)api.dom.i2svg({node:DOCUMENT});};function bootstrap(){if(IS_BROWSER){if(!WINDOW.FontAwesome){WINDOW.FontAwesome=api;}domready(function(){if(Object.keys(namespace.styles).length>0){autoReplace();}if(config.observeMutations&&typeof MutationObserver==='function'){observe({treeCallback:onTree,nodeCallback:onNode,pseudoElementsCallback:searchPseudoElements});}});}namespace.hooks=_extends({},namespace.hooks,{addPack:function addPack(prefix,icons){namespace.styles[prefix]=_extends({},namespace.styles[prefix]||{},icons);build();autoReplace();},addShims:function addShims(shims){var _namespace$shims;(_namespace$shims=namespace.shims).push.apply(_namespace$shims,toConsumableArray(shims));build();autoReplace();}});}Object.defineProperty(api,'config',{get:function get(){return config;},set:function set(newConfig){update(newConfig);}});bunker(bootstrap);})();
 
 /***/ }),
-/* 133 */
+/* 133 */,
+/* 134 */,
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(123);
 __webpack_require__(132);
-module.exports = __webpack_require__(134);
+module.exports = __webpack_require__(136);
 
 
 /***/ }),
-/* 134 */
+/* 136 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+
+var options = {
+	filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+	filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+	filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+	filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+};
+
+$(document).ready(function () {
+	$('textarea.ckeditor1').ckeditor(options);
+});
 
 /***/ })
 /******/ ]);

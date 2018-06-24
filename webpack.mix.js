@@ -14,4 +14,9 @@ mix.js([
 	'resources/assets/js/app.js',
 	'resources/assets/js/fontawesome-all.js'
 	], 'public/js/app.js')
+	.js([
+	'resources/assets/js/app.js',
+	'resources/assets/js/fontawesome-all.js',
+	'resources/assets/js/admin.js'
+	], 'public/js/admin.js')
    .sass('resources/assets/sass/app.scss', 'public/css');
