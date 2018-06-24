@@ -37,6 +37,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
 	// DASHBOARD
 	Route::get('/tableau', 'AdminController@dashboard')->name('dashboard');
+	// FILE MANAGER
+	Route::get('/filemanager', 'AdminController@filemanager')->name('filemanager');
 
 	// USERS
 	Route::get('/utilisateurs', 'UserController@list')->name('users');

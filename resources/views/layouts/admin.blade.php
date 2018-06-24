@@ -46,6 +46,9 @@
                                 <a class="nav-link" href="{{ route('admin.articles') }}">Articles</a>
                             </li>
                         @endcan
+                            <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.filemanager') !== false) active @endif">
+                                <a class="nav-link" href="{{ route('admin.filemanager') }}">Documents</a>
+                            </li>
                         @can('list', App\Category::class)
                             <li class="nav-item @if(strpos(Route::current()->getName(), 'admin.categor') !== false) active @endif">
                                 <a class="nav-link" href="{{ route('admin.categories') }}">Catégories</a>
