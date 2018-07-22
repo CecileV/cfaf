@@ -17,6 +17,7 @@ mix.js([
 	.js([
 	'resources/assets/js/app.js',
 	'resources/assets/js/fontawesome-all.js',
+	'resources/assets/js/selectize.js',
 	'resources/assets/js/admin.js'
 	], 'public/js/admin.js')
    .sass('resources/assets/sass/app.scss', 'public/css')

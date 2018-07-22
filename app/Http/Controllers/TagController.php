@@ -15,10 +15,14 @@ class TagController extends Controller
     }
 
     /* -- ESPACE ADMINISTRATION -- */
-    public function list() {
+    public function list(Request $request) {
         if (Auth::user()->can('list', Tag::class)) {
             $tags = Tag::get();
-            return view('admin.tag.list', compact('tags'));
+            if ($request->route()->named('admin.ajax.tags')) {
+                return response()->json($tags);
+            } else {
+                return view('admin.tag.list', compact('tags'));
+            }
         }
         return redirect(route('admin.dashboard'));
     }

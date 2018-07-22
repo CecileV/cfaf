@@ -39,7 +39,14 @@
                 </div>
             </div>
         </div>
-
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="control-label">Mots Clés</label>
+                    <input type="text" class="form-control input-tags" name="tags" value="">
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -65,6 +72,22 @@
 
 @section('jscontent')
     <script type="text/javascript">
+
+        var select = $('.input-tags').selectize({
+            create: false
+        });
+
+        $.ajax({
+            url : "{{ route('admin.ajax.tags') }}",
+            type : 'POST',
+            data : {
+                "_token": '{{ csrf_token() }}'
+            },
+            success : function(json){
+                select.addOption(json);
+            }
+        });
+
         $('.aborted').click(function(){
             if(confirm('Êtes-vous sûr de vouloir annuler la création de l\'article ?')){
                 document.location.href = "{{ route('admin.articles') }}";            

@@ -104,6 +104,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 		Route::post('category/restore', 'CategoryController@restore')->name('category.restore');
 
 		// TAGS
+		Route::post('tag/list', 'TagController@list')->name('tags');
 		Route::post('tag/delete', 'TagController@delete')->name('tag.delete');
 		Route::post('tag/restore', 'TagController@restore')->name('tag.restore');
 
