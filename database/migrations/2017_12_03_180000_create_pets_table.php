@@ -20,7 +20,7 @@ class CreatePetsTable extends Migration
     public function up()
     {
         Schema::create('pets', function (Blueprint $table) {
-            $table->increments('pet_id');
+            $table->increments('id');
             $table->integer('state_id')->nullable();
             $table->integer('specie_id')->nullable();
             $table->string('name');

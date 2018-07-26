@@ -33,9 +33,9 @@ class Specie extends Model
      * Relations
      *
      */
-    public function species() {
+    public function pets() {
         return $this
-            ->belongsToMany('App\Specie')
+            ->belongsToMany('App\Pet')
             ->withTimestamps();
     }
 

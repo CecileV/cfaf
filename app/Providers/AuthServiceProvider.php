@@ -20,6 +20,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Role' => 'App\Policies\RolePolicy',
         'App\Tag' => 'App\Policies\TagPolicy',
         'App\User' => 'App\Policies\UserPolicy',
+        'App\Specie' => 'App\Policies\SpeciePolicy',
+        'App\Pet' => 'App\Policies\PetPolicy',
     ];
 
     /**

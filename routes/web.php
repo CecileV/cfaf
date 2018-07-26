@@ -103,6 +103,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 		Route::post('category/delete', 'CategoryController@delete')->name('category.delete');
 		Route::post('category/restore', 'CategoryController@restore')->name('category.restore');
 
+		// SPECIES
+		Route::post('specie/delete', 'SpecieController@delete')->name('specie.delete');
+		Route::post('specie/restore', 'SpecieController@restore')->name('specie.restore');
+
 		// TAGS
 		Route::post('tag/delete', 'TagController@delete')->name('tag.delete');
 		Route::post('tag/restore', 'TagController@restore')->name('tag.restore');

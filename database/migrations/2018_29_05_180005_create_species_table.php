@@ -20,14 +20,15 @@ class CreateSpeciesTable extends Migration
     public function up()
     {
         Schema::create('species', function (Blueprint $table) {
-            $table->increments  ('specie_id');
+            $table->increments  ('id');
             $table->string      ('name');
+            $table->boolean     ('identification')->nullable();
             $table->text        ('description');
-            $table->integer     ('identification')->nullable();
             $table->integer     ('updated_by')->nullable();
             $table->integer     ('created_by')->nullable();
             $table->integer     ('deleted_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->index       ('updated_by');
             $table->index       ('created_by');
             $table->index       ('deleted_by');

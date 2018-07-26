@@ -27,11 +27,11 @@ class StoreSpecie extends FormRequest
     {
         return [
             "name" => "required|min:5",
-            "birth_day" => "required",
-            //"picture" => "image",
-            "indentification" => "required",
-            "description" => "required",
-            "healt" => "required"
+//            "birth_day" => "required",
+//            //"picture" => "image",
+//            "indentification" => "required",
+//            "description" => "required",
+//            "healt" => "required"
         ];
     }
 }
